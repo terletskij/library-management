@@ -4,9 +4,9 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
 ## 🚀 Roadmap
 
 ### 1. Project Configuration
-  - [ ] Create project structure
-  - [ ] Configure `PostgreSQL` connection
-  - [ ] Provide project running via `docker-compose.yml`
+  - [x] Create project structure
+  - [x] Configure `PostgreSQL` connection
+  - [x] Provide project running via `docker-compose.yml`
 ### 2. Entity & Validation
   - [ ] Implement `Book` and `Member` entity
   - [ ] Add validation for `Book` attributes: `name` (required, capital letter, min 3 symbols), `author` (required, two capitalized words, e.g. "Paulo Coelho")
