@@ -8,9 +8,9 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
   - [x] Configure `PostgreSQL` connection
   - [x] Provide project running via `docker-compose.yml`
 ### 2. Entity & Validation
-  - [ ] Implement `Book` and `Member` entity
-  - [ ] Add validation for `Book` attributes: `name` (required, capital letter, min 3 symbols), `author` (required, two capitalized words, e.g. "Paulo Coelho")
-  - [ ] Add validation for `Member` attributes: `name` (required)
+  - [x] Implement `Book` and `Member` entity
+  - [x] Add validation for `Book` attributes: `name` (required, capital letter, min 3 symbols), `author` (required, two capitalized words, e.g. "Paulo Coelho")
+  - [x] Add validation for `Member` attributes: `name` (required)
 ### 3. Business logic
   - [ ] Add `BookRepository` & `MemberRepository`, both should extend `JpaRepository`
   - [ ] Implement `BookService` for Books `CRUD` operations
