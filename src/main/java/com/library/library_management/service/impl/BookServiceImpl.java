@@ -4,9 +4,12 @@ import com.library.library_management.dto.BookResponse;
 import com.library.library_management.dto.CreateBookRequest;
 import com.library.library_management.dto.UpdateBookRequest;
 import com.library.library_management.entity.Book;
+import com.library.library_management.exception.BookNotAvailableException;
 import com.library.library_management.exception.BookNotFoundException;
 import com.library.library_management.repository.BookRepository;
 import com.library.library_management.service.BookService;
+import com.library.library_management.service.BorrowService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,9 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private BorrowService borrowService;
+    
     @Override
     public BookResponse createBook(CreateBookRequest request) {
         Optional<Book> existingBook = bookRepository.findByTitleAndAuthor(request.title(), request.author());
@@ -72,8 +78,21 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Book not found"));
 
-        // TODO: if book is borrowed - throw an exception
+        if (borrowService.isBookCurrentlyBorrowed(id)) {
+            throw new BookNotAvailableException("Book is currently borrowed and cannot be deleted");
+        }
 
         bookRepository.delete(book);
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+        return bookRepository.existsById(id);
+    }
+
+    @Override
+    public int getAmountById(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("Book not found")).getAmount();
     }
 }
