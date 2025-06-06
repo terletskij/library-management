@@ -17,11 +17,11 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
   - [x] Implement `BorrowService` for borrow management
   - [x] Implement `MemberService` for Library Members CRUD operations
 ### 4. Controller
-  - [ ] Implement basic `CRUD` endpoints for both `BookController` and `MemberController` <br>
+  - [x] Implement basic `CRUD` endpoints for both `BookController` and `MemberController` <br>
   #### Implement special endpoints in Book Controller:
-  - [ ] Retrieve all books borrowed by a specific `member by name`
-  - [ ] Retrieve all borrowed distinct book `names`
-  - [ ] Retrieve all borrowed distinct book `names` and `amount` how much copy of this book was borrowed
+  - [x] Retrieve all books borrowed by a specific `member by name`
+  - [x] Retrieve all borrowed distinct book `names`
+  - [x] Retrieve all borrowed distinct book `names` and `amount` how much copy of this book was borrowed
 ### 5. Tests
   - [ ] Cover all scenarios with `unit` tests for services
   - [ ] Test duplicate book handling
