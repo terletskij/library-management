@@ -12,9 +12,10 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
   - [x] Add validation for `Book` attributes: `name` (required, capital letter, min 3 symbols), `author` (required, two capitalized words, e.g. "Paulo Coelho")
   - [x] Add validation for `Member` attributes: `name` (required)
 ### 3. Business logic
-  - [ ] Add `BookRepository` & `MemberRepository`, both should extend `JpaRepository`
-  - [ ] Implement `BookService` for Books `CRUD` operations
-  - [ ] Implement `MemberService` for Library Members CRUD operations
+  - [x] Add `BookRepository` & `MemberRepository`, both should extend `JpaRepository`
+  - [x] Implement `BookService` for Books `CRUD` operations
+  - [x] Implement `BorrowService` for borrow management
+  - [x] Implement `MemberService` for Library Members CRUD operations
 ### 4. Controller
   - [ ] Implement basic `CRUD` endpoints for both `BookController` and `MemberController` <br>
   #### Implement special endpoints in Book Controller:
