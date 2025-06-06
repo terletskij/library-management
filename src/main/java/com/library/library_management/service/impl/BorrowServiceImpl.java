@@ -11,11 +11,10 @@ import com.library.library_management.entity.Member;
 import com.library.library_management.exception.BookNotAvailableException;
 import com.library.library_management.exception.BorrowLimitExceededException;
 import com.library.library_management.exception.BorrowNotFoundException;
-import com.library.library_management.exception.MemberNotFoundException;
 import com.library.library_management.repository.BorrowRepository;
-import com.library.library_management.repository.MemberRepository;
 import com.library.library_management.service.BookService;
 import com.library.library_management.service.BorrowService;
+import com.library.library_management.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,9 +41,8 @@ public class BorrowServiceImpl implements BorrowService {
     @Autowired
     private BorrowMapper borrowMapper;
 
-    // TODO: change to MemberService when its ready
     @Autowired
-    private MemberRepository memberRepository;
+    private MemberService memberService;
 
     @Override
     public void borrowBook(Long memberId, Long bookId) {
@@ -60,8 +58,7 @@ public class BorrowServiceImpl implements BorrowService {
         if (borrowCount >= borrowLimit) {
             throw new BorrowLimitExceededException("Member has reached the max borrow limit");
         }
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new MemberNotFoundException("Member not found"));
+        Member member = memberService.getMemberEntityById(memberId);
 
         Borrow borrow = new Borrow(book, member, LocalDate.now());
         borrowRepository.save(borrow);
