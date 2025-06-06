@@ -14,4 +14,6 @@ public interface BorrowRepository extends JpaRepository<Borrow, Long> {
     int countByMemberIdAndReturnDateIsNull(Long memberId);
 
     List<Borrow> findByMemberIdAndReturnDateIsNull(Long memberId);
+
+    List<Borrow> findByReturnDateIsNull();
 }
