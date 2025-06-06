@@ -99,4 +99,9 @@ public class BorrowServiceImpl implements BorrowService {
     public boolean isBookCurrentlyBorrowed(Long bookId) {
         return borrowRepository.existsByBookIdAndReturnDateIsNull(bookId);
     }
+
+    @Override
+    public boolean isMemberCurrentlyBorrowing(Long memberId) {
+        return borrowRepository.existsByMemberIdAndReturnDateIsNull(memberId);
+    }
 }

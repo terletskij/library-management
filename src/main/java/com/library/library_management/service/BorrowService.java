@@ -13,4 +13,6 @@ public interface BorrowService {
     List<BorrowResponse> getBorrowedBooksByMember(Long memberId);
 
     boolean isBookCurrentlyBorrowed(Long bookId);
+
+    boolean isMemberCurrentlyBorrowing(Long memberId);
 }
