@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -105,5 +106,25 @@ public class BorrowServiceImpl implements BorrowService {
     @Override
     public boolean isMemberCurrentlyBorrowing(Long memberId) {
         return borrowRepository.existsByMemberIdAndReturnDateIsNull(memberId);
+    }
+
+    @Override
+    public List<String> getDistinctBorrowedBookTitles() {
+        List<Borrow> borrows = borrowRepository.findByReturnDateIsNull();
+        return borrows.stream()
+                .map(borrow -> borrow.getBook().getTitle())
+                .distinct()
+                .toList();
+    }
+
+    @Override
+    public Map<String, Long> getBorrowedBookTitlesWithCount() {
+        List<Borrow> borrows = borrowRepository.findByReturnDateIsNull();
+
+        return borrows.stream()
+                .collect(Collectors.groupingBy(
+                        borrow -> borrow.getBook().getTitle(),
+                        Collectors.counting()
+                ));
     }
 }
