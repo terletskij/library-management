@@ -5,8 +5,8 @@ import com.library.library_management.dto.MemberResponse;
 import com.library.library_management.dto.UpdateMemberRequest;
 import com.library.library_management.entity.Member;
 import com.library.library_management.exception.MemberNotFoundException;
+import com.library.library_management.repository.BorrowRepository;
 import com.library.library_management.repository.MemberRepository;
-import com.library.library_management.service.BorrowService;
 import com.library.library_management.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
     private MemberRepository memberRepository;
 
     @Autowired
-    private BorrowService borrowService;
+    private BorrowRepository borrowRepository;
 
     @Override
     public MemberResponse createMember(CreateMemberRequest request) {
@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService {
     public void deleteMemberById(Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new MemberNotFoundException("Member not found"));
-        if (borrowService.isMemberCurrentlyBorrowing(id)) {
+        if (borrowRepository.existsByMemberIdAndReturnDateIsNull(id)) {
             throw new RuntimeException("Member has borrowed books and cannot be deleted");
         }
         memberRepository.delete(member);

@@ -7,9 +7,8 @@ import com.library.library_management.entity.Book;
 import com.library.library_management.exception.BookNotAvailableException;
 import com.library.library_management.exception.BookNotFoundException;
 import com.library.library_management.repository.BookRepository;
+import com.library.library_management.repository.BorrowRepository;
 import com.library.library_management.service.BookService;
-import com.library.library_management.service.BorrowService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class BookServiceImpl implements BookService {
     private BookRepository bookRepository;
 
     @Autowired
-    private BorrowService borrowService;
+    private BorrowRepository borrowRepository;
     
     @Override
     public BookResponse createBook(CreateBookRequest request) {
@@ -78,7 +77,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Book not found"));
 
-        if (borrowService.isBookCurrentlyBorrowed(id)) {
+        if (borrowRepository.existsByBookIdAndReturnDateIsNull(id)) {
             throw new BookNotAvailableException("Book is currently borrowed and cannot be deleted");
         }
 
