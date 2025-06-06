@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BorrowServiceImpl implements BorrowService {
@@ -84,6 +85,16 @@ public class BorrowServiceImpl implements BorrowService {
     public List<BorrowResponse> getBorrowedBooksByMember(Long memberId) {
         List<Borrow> borrows = borrowRepository.findByMemberIdAndReturnDateIsNull(memberId);
         return borrows.stream().map(borrow -> borrowMapper.toResponse(borrow)).toList();
+    }
+
+    @Override
+    public List<BorrowResponse> getBorrowedBooksByMemberName(String memberName) {
+        Member member = memberRepository.findByName(memberName)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found"));
+        List<Borrow> borrows = borrowRepository.findByMemberIdAndReturnDateIsNull(member.getId());
+        return borrows.stream()
+                .map(borrowMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

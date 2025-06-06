@@ -12,6 +12,8 @@ public interface BorrowService {
 
     List<BorrowResponse> getBorrowedBooksByMember(Long memberId);
 
+    List<BorrowResponse> getBorrowedBooksByMemberName(String memberName);
+
     boolean isBookCurrentlyBorrowed(Long bookId);
 
     boolean isMemberCurrentlyBorrowing(Long memberId);
