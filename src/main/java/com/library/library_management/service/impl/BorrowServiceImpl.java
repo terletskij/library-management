@@ -1,20 +1,16 @@
 package com.library.library_management.service.impl;
 
-import com.library.library_management.dto.BookResponse;
 import com.library.library_management.dto.BorrowResponse;
-import com.library.library_management.dto.UpdateBookRequest;
 import com.library.library_management.dto.mapper.BookMapper;
 import com.library.library_management.dto.mapper.BorrowMapper;
 import com.library.library_management.entity.Book;
 import com.library.library_management.entity.Borrow;
 import com.library.library_management.entity.Member;
-import com.library.library_management.exception.BookNotAvailableException;
-import com.library.library_management.exception.BorrowLimitExceededException;
-import com.library.library_management.exception.BorrowNotFoundException;
+import com.library.library_management.exception.*;
+import com.library.library_management.repository.BookRepository;
 import com.library.library_management.repository.BorrowRepository;
-import com.library.library_management.service.BookService;
+import com.library.library_management.repository.MemberRepository;
 import com.library.library_management.service.BorrowService;
-import com.library.library_management.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,7 +29,7 @@ public class BorrowServiceImpl implements BorrowService {
     private BorrowRepository borrowRepository;
 
     @Autowired
-    private BookService bookService;
+    private BookRepository bookRepository;
 
     @Autowired
     private BookMapper bookMapper;
@@ -42,13 +38,13 @@ public class BorrowServiceImpl implements BorrowService {
     private BorrowMapper borrowMapper;
 
     @Autowired
-    private MemberService memberService;
+    private MemberRepository memberRepository;
 
     @Override
     public void borrowBook(Long memberId, Long bookId) {
 
-        BookResponse bookResponse = bookService.getBookById(bookId);
-        Book book = bookMapper.fromBookResponse(bookResponse);
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(() -> new BookNotFoundException("Book not found"));
 
         if (book.getAmount() == 0) {
             throw new BookNotAvailableException("Book is not available for borrowing");
@@ -58,14 +54,14 @@ public class BorrowServiceImpl implements BorrowService {
         if (borrowCount >= borrowLimit) {
             throw new BorrowLimitExceededException("Member has reached the max borrow limit");
         }
-        Member member = memberService.getMemberEntityById(memberId);
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new MemberNotFoundException("Member not found"));
 
         Borrow borrow = new Borrow(book, member, LocalDate.now());
         borrowRepository.save(borrow);
 
         book.setAmount(book.getAmount() - 1);
-        UpdateBookRequest request = bookMapper.toUpdateRequest(book);
-        bookService.updateBookById(book.getId(), request);
+        bookRepository.save(book);
     }
 
     @Override
@@ -81,9 +77,7 @@ public class BorrowServiceImpl implements BorrowService {
 
         Book book = borrow.getBook();
         book.setAmount(book.getAmount() + 1);
-        UpdateBookRequest updateRequest = bookMapper.toUpdateRequest(book);
-
-        bookService.updateBookById(book.getId(), updateRequest);
+        bookRepository.save(book);
     }
 
     @Override
