@@ -6,10 +6,11 @@ import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Entity
+@SequenceGenerator(name = "member_seq", sequenceName = "member_id_seq", allocationSize = 1)
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq")
     private Long id;
 
     @NotBlank(message = "Name is required")
