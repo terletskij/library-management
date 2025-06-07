@@ -1,5 +1,105 @@
-# Library Management
+# 📚 Library Management
 REST service for library management using Spring Boot, JPA, Spring Validator, PostgreSQL, JUnit and Mockito.
+
+
+---
+
+## 📑 Table of Contents
+
+- [Tech Stack / Requirements](#-tech-stack--requirements)
+- [Getting Started](#-getting-started)
+  - [Clone the Repository](#clone-the-repository)
+  - [Set Up Environment Variables](#set-up-environment-variables)
+  - [Run with Docker](#run-with-docker)
+  - [Access the API](#access-the-api)
+- [API Features](#-api-features)
+- [Running Tests](#-running-tests)
+- [Developer Notes](#-developer-notes)
+- [Contact](#-contact)
+
+---
+
+## 🛠️ Tech Stack / Requirements
+
+- **Java 17**
+- **Spring Boot 3.5.0**
+- **Spring Data JPA**
+- **PostgreSQL**
+- **Docker / Docker Compose**
+- **JUnit 5 / Mockito**
+- **Swagger (OpenAPI)**
+
+---
+
+## 🚀 Getting Started
+
+### 📥 1. Clone the Repository
+
+```
+git clone https://github.com/terletskij/library-management.git
+cd library-management
+```
+### ⚙️ 2. Set Up Environment Variables
+Create a `.env` file in the root of project
+```
+DATABASE_USER=user-name
+DATABASE_PASSWORD=user-password
+DATABASE_NAME=librarydb
+
+MAX_BORROWED_BOOKS=10
+```
+> [!NOTE]
+> You can customize MAX_BORROWED_BOOKS to set how many books a member is allowed to borrow at one time.
+
+### 🐳 3. Run with Docker
+```
+docker-compose up --build
+```
+This will:
+- Start a PostgreSQL container
+- Build and start the Spring Boot application
+
+## 🌐 Access the API
+Swagger UI: `http://localhost:8080/swagger-ui/index.html`
+
+OpenAPI Docs: `http://localhost:8080/v3/api-docs`
+
+## 📘 API Features
+- CRUD for Books (/api/v1/books)
+
+- CRUD for Members (/api/v1/members)
+
+- Borrow and return books (/api/v1/borrow)
+
+- Retrieve borrowed books by member ID or name
+
+- Get list of all currently borrowed book titles
+
+- Get borrowed book titles with count
+
+- Validation for input data (name formatting, capital letters)
+
+- Unit testing for services
+
+## 🧪 Running Tests
+You can run all unit tests using:
+```
+./mvnw test
+```
+
+## 📝 Developer Notes
+### 🧰 Manual (non-Docker) Startup
+If you want to run the application manually:
+
+Make sure `PostgreSQL` is running
+
+Configure `application.properties` with your DB credentials
+
+Start the app with:
+```
+./mvnw spring-boot:run
+```
+
 
 ## 🚀 Roadmap
 
@@ -23,10 +123,10 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
   - [x] Retrieve all borrowed distinct book `names`
   - [x] Retrieve all borrowed distinct book `names` and `amount` how much copy of this book was borrowed
 ### 5. Tests
-  - [ ] Cover all scenarios with `unit` tests for services
-  - [ ] Test duplicate book handling
-  - [ ] Test borrow/return logic and limits
-  - [ ] Test deletion restrictions
+  - [x] Cover all scenarios with `unit` tests for services
+  - [x] Test duplicate book handling
+  - [x] Test borrow/return logic and limits
+  - [x] Test deletion restrictions
 ### 6. Documentation
-  - [ ] Provide endpoints documentation via `OpenAPI/Swagger`
-  - [ ] Add how-to-run project steps in `README`
+  - [x] Provide endpoints documentation via `OpenAPI/Swagger`
+  - [x] Add how-to-run project steps in `README`
