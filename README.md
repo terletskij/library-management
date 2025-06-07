@@ -11,7 +11,6 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
 - [API Features](#-api-features)
 - [Running Tests](#-running-tests)
 - [Developer Notes](#-developer-notes)
-- [Contact](#-contact)
 
 ---
 
