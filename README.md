@@ -8,10 +8,6 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
 
 - [Tech Stack / Requirements](#-tech-stack--requirements)
 - [Getting Started](#-getting-started)
-  - [Clone the Repository](#clone-the-repository)
-  - [Set Up Environment Variables](#set-up-environment-variables)
-  - [Run with Docker](#run-with-docker)
-  - [Access the API](#access-the-api)
 - [API Features](#-api-features)
 - [Running Tests](#-running-tests)
 - [Developer Notes](#-developer-notes)
@@ -33,13 +29,13 @@ REST service for library management using Spring Boot, JPA, Spring Validator, Po
 
 ## 🚀 Getting Started
 
-### 📥 Clone the Repository
+### 1. 📥 Clone the Repository
 
 ```
 git clone https://github.com/terletskij/library-management.git
 cd library-management
 ```
-### ⚙️ Set Up Environment Variables
+### 2. ⚙️ Set Up Environment Variables
 Create a `.env` file in the root of project
 ```
 DATABASE_USER=user-name
@@ -51,7 +47,7 @@ MAX_BORROWED_BOOKS=10
 > [!NOTE]
 > You can customize MAX_BORROWED_BOOKS to set how many books a member is allowed to borrow at one time.
 
-### 🐳 Run with Docker
+### 3. 🐳 Run with Docker
 ```
 docker-compose up --build
 ```
