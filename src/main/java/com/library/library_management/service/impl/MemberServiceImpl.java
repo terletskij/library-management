@@ -26,7 +26,8 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponse createMember(CreateMemberRequest request) {
         Member member = new Member();
         member.setName(request.name());
-        return toResponse(member);
+        Member savedMember = memberRepository.save(member);
+        return toResponse(savedMember);
     }
 
     @Override
