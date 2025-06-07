@@ -7,10 +7,11 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @Entity
+@SequenceGenerator(name = "book_seq", sequenceName = "book_id_seq", allocationSize = 1)
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
     private Long id;
 
     @NotBlank(message = "Book title is required")
