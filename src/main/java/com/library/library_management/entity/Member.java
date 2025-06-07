@@ -26,6 +26,14 @@ public class Member {
         membershipDate = LocalDate.now();
     }
 
+
+    @PrePersist
+    protected void onCreate() {
+        if (this.membershipDate == null) {
+            this.membershipDate = LocalDate.now();
+        }
+    }
+
     public Long getId() {
         return id;
     }
